@@ -98,9 +98,35 @@ export class DisneyApiComponent implements OnInit {
     this.loadPersonajes();
   }
 
-  public updatePersonaje(content: any, personaje: any): void {
+  public editPersonaje(content: any, personaje: any): void {
     this.personajeSelected = {...personaje};
     this.modalService.open(content);
+  }
+
+  public actualizarPersonaje(): void {
+    this.personajesServices.updatePersonaje(this.personajeSelected.id, this.personajeSelected).toPromise()
+    .then( (response) => {
+      console.log(response);
+      this.loadPersonajes();
+    })
+    .catch( (error) => {
+      console.error(error);
+    });
+
+    this.closeModal();
+  }
+
+  public eliminarPersonaje(): void {
+    this.personajesServices.deletePersonaje(this.personajeSelected.id).toPromise()
+    .then( (response) => {
+      console.log(response);
+      this.loadPersonajes();
+    })
+    .catch( (error) => {
+      console.error(error);
+    });
+
+    this.closeModal();
   }
 
 }

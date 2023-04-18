@@ -20,4 +20,12 @@ export class PersonajesService {
   public savePersonaje(personaje: Personaje): Observable<any> {
     return this.http.post("http://localhost:8080/personajes", personaje);
   }
+
+  public updatePersonaje(id: number, personaje: Personaje): Observable<any> {
+    return this.http.put("http://localhost:8080/personajes/" + id, personaje);
+  }
+
+  public deletePersonaje(id: number): Observable<any> {
+    return this.http.delete("http://localhost:8080/personajes/" + id);
+  }
 }

@@ -41,7 +41,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let personajeBD of personajesBD" style="cursor: pointer;" (click)="updatePersonaje(content, personajeBD)">
+        <tr *ngFor="let personajeBD of personajesBD" style="cursor: pointer;" (click)="editPersonaje(content, personajeBD)">
           <th scope="row">{{ personajeBD.id }}</th>
           <td>{{ personajeBD.nombre }}</td>
           <td>{{ personajeBD.tvShow }}</td>
@@ -86,8 +86,27 @@
       </div>
     </div>
 	</div>
+  <div class="modal-body" *ngIf="personajeSelected.id != undefined">
+    <div class="row mb-2">
+      <div class="col-6">
+        <label>Nombre:</label>
+        <input type="text" class="form-control" id="nombre" name="nombre" [(ngModel)]="personajeSelected.nombre"/>
+      </div>
+      <div class="col-6">
+        <label>Tv Show: </label>
+        <input type="text" class="form-control" id="tvShow" name="tvShow" [(ngModel)]="personajeSelected.tvShow"/>
+      </div>
+    </div>
+    <div class="row mb-2">
+      <div class="col-6">
+        <input type="text" class="form-control" id="foto" name="foto" [(ngModel)]="personajeSelected.foto"/>
+      </div>
+    </div>
+	</div>
 	<div class="modal-footer">
+    <button type="button" class="btn btn-warning" (click)="eliminarPersonaje()" *ngIf="personajeSelected.id != undefined">Eliminar</button>
     <button type="button" class="btn btn-danger" (click)="closeModal()">Cerrar</button>
-		<button type="button" class="btn btn-primary" (click)="guardarPersonaje()">Guardar</button>
+		<button type="button" class="btn btn-primary" (click)="guardarPersonaje()" *ngIf="personajeSelected.id == undefined">Guardar</button>
+    <button type="button" class="btn btn-primary" (click)="actualizarPersonaje()" *ngIf="personajeSelected.id != undefined">Actualizar</button>
 	</div>
 </ng-template>
