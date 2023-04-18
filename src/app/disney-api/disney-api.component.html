@@ -1,1 +1,93 @@
-<p>disney-api works!</p>
+<div class="container-fluid py-4">
+  <h4>Api externa</h4>
+  <div class="table-responsive">
+    <table class="table table-striped table-bordered table-hover">
+      <thead>
+        <tr>
+          <th scope="col">api id</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">TV show</th>
+          <th scope="col">Foto</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let personaje of data" style="cursor: pointer;" (click)="infoPersonaje(content, personaje)">
+          <th scope="row">{{ personaje._id }}</th>
+          <td>{{ personaje.name }}</td>
+          <td>{{ personaje.tvShows[0] }}</td>
+          <td>
+            <img src={{personaje.imageUrl}} style="height: 100px;" />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="d-flex justify-content-center p-2">
+      <ngb-pagination [collectionSize]="collectionSize" [(page)]="currentPage" [maxSize]="5"
+        [rotate]="true" [ellipses]="true" [boundaryLinks]="true" (pageChange)="pagination()">
+      </ngb-pagination>
+    </div>
+  </div>
+  <br>
+  <h4>Personajes Base de datos local</h4>
+  <div class="table-responsive">
+    <table class="table table-striped table-bordered table-hover">
+      <thead>
+        <tr>
+          <th scope="col">id</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">TV show</th>
+          <th scope="col">api id</th>
+          <th scope="col">Foto</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let personajeBD of personajesBD" style="cursor: pointer;" (click)="updatePersonaje(content, personajeBD)">
+          <th scope="row">{{ personajeBD.id }}</th>
+          <td>{{ personajeBD.nombre }}</td>
+          <td>{{ personajeBD.tvShow }}</td>
+          <td>{{ personajeBD.apiId }}</td>
+          <td>
+            <img src={{personajeBD.foto}} style="height: 100px;" />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="d-flex justify-content-center p-2">
+      <ngb-pagination [collectionSize]="collectionSizePersonajesBD" [(page)]="currentPagePersonajesDB" [maxSize]="5"
+        [rotate]="true" [ellipses]="true" [boundaryLinks]="true" (pageChange)="paginationPersonajes()">
+      </ngb-pagination>
+    </div>
+  </div>
+</div>
+
+<ng-template #content let-c="close" let-d="dismiss">
+	<div class="modal-header">
+		<h4 class="modal-title" id="modal-basic-title">Hi there!</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="closeModal()"></button>
+	</div>
+	<div class="modal-body" *ngIf="personajeSelected.id == undefined">
+    <div class="row">
+      <div class="col-6">
+        <label>Nombre:</label>
+        <span> {{personajeSelected.nombre}}</span>
+      </div>
+      <div class="col-6">
+        <label>Tv Show: </label>
+        <span> {{personajeSelected.tvShow}}</span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        <img src={{personajeSelected.foto}} style="height: 200px; max-width: 250px;" />
+      </div>
+      <div class="col-6">
+        <label>Api Id: </label>
+        <span> {{personajeSelected.apiId}}</span>
+      </div>
+    </div>
+	</div>
+	<div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="closeModal()">Cerrar</button>
+		<button type="button" class="btn btn-primary" (click)="guardarPersonaje()">Guardar</button>
+	</div>
+</ng-template>
